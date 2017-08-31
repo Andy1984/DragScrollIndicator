@@ -36,9 +36,24 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         
         
-        indicator = Indicator(frame: CGRect(x: scrollView.frame.size.width - 20, y: 0, width: 20, height: 50))
+        indicator = Indicator(frame: CGRect(x: scrollView.frame.size.width - 50, y: 0, width: 50, height: 50))
         scrollView.addSubview(indicator)
         indicator.backgroundColor = .black
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragging(sender:)))
+        indicator.addGestureRecognizer(pan);
+    }
+    
+    func dragging(sender:UIPanGestureRecognizer) {
+        print(sender)
+        switch sender.state {
+        case .changed:
+            let offset = sender.translation(in: indicator.superview!)
+            indicator.center.y += offset.y
+            sender.setTranslation(.zero, in: indicator.superview!)
+        default:
+            break;
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -54,19 +69,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         let maxIndicatorOffset = scrollView.frame.size.height - indicator.frame.height
         indicator.frame.origin.y = maxIndicatorOffset * offsetPercentage
         indicator.frame = scrollView.superview!.convert(indicator.frame, to: scrollView)
-        
-        
-        
-        
     }
-    
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
