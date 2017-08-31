@@ -14,6 +14,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     var indicator:Indicator!
     
+    var isDraggingIndicator:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +39,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         
         indicator = Indicator(frame: CGRect(x: scrollView.frame.size.width - 50, y: 0, width: 50, height: 50))
-        scrollView.addSubview(indicator)
+        scrollView.superview!.addSubview(indicator)//add to superView is not perfect
         indicator.backgroundColor = .black
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dragging(sender:)))
@@ -45,19 +47,35 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func dragging(sender:UIPanGestureRecognizer) {
-        print(sender)
-        switch sender.state {
-        case .changed:
+        
+        if sender.state == .began {
+            isDraggingIndicator = true
+        }
+        
+        if sender.state == .changed {
             let offset = sender.translation(in: indicator.superview!)
             indicator.center.y += offset.y
             sender.setTranslation(.zero, in: indicator.superview!)
-        default:
-            break;
+            
+            
+            let currentOffsetY = indicator.frame.origin.y
+            let maxOffsetY = scrollView.frame.size.height - indicator.frame.height
+            let offsetPercentage = currentOffsetY / maxOffsetY
+            print(offsetPercentage)
+            scrollView.contentOffset.y = offsetPercentage * (scrollView.contentSize.height - scrollView.frame.size.height)
+            
         }
+        
+        if sender.state == .ended {
+            isDraggingIndicator = false
+        }
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        guard isDraggingIndicator == false else {
+            return
+        }
         guard scrollView.superview != nil else {
             return
         }
@@ -68,7 +86,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         let maxIndicatorOffset = scrollView.frame.size.height - indicator.frame.height
         indicator.frame.origin.y = maxIndicatorOffset * offsetPercentage
-        indicator.frame = scrollView.superview!.convert(indicator.frame, to: scrollView)
+        
     }
 }
 
