@@ -13,6 +13,7 @@
 		E4C414BF1F4EE3A5004E49EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4C414BE1F4EE3A5004E49EF /* Assets.xcassets */; };
 		E4C414C21F4EE3A5004E49EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4C414C01F4EE3A5004E49EF /* LaunchScreen.storyboard */; };
 		E4C414CC1F4EE7F4004E49EF /* Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C414CB1F4EE7F4004E49EF /* Indicator.swift */; };
+		E4C4DD511F5D3C3A00B151CC /* DragScrollIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C4DD501F5D3C3A00B151CC /* DragScrollIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E4C414C11F4EE3A5004E49EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4C414C31F4EE3A5004E49EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4C414CB1F4EE7F4004E49EF /* Indicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Indicator.swift; sourceTree = "<group>"; };
+		E4C4DD501F5D3C3A00B151CC /* DragScrollIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragScrollIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				E4C414B71F4EE3A5004E49EF /* AppDelegate.swift */,
 				E4C414B91F4EE3A5004E49EF /* ViewController.swift */,
+				E4C4DD501F5D3C3A00B151CC /* DragScrollIndicator.swift */,
 				E4C414CB1F4EE7F4004E49EF /* Indicator.swift */,
 				E4C414BB1F4EE3A5004E49EF /* Main.storyboard */,
 				E4C414BE1F4EE3A5004E49EF /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 				E4C414BA1F4EE3A5004E49EF /* ViewController.swift in Sources */,
 				E4C414CC1F4EE7F4004E49EF /* Indicator.swift in Sources */,
 				E4C414B81F4EE3A5004E49EF /* AppDelegate.swift in Sources */,
+				E4C4DD511F5D3C3A00B151CC /* DragScrollIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +310,7 @@
 				E4C414C81F4EE3A5004E49EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

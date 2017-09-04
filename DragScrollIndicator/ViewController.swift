@@ -34,16 +34,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             scrollView.addSubview(colorView)
         }
         scrollView.contentSize = CGSize(width: 0, height: CGFloat(count) * h)
-        scrollView.delegate = self
+        scrollView.addDragScrollIndicator()
+//        scrollView.delegate = self
+
         
         
-        
-        indicator = Indicator(frame: CGRect(x: scrollView.frame.size.width - 50, y: 0, width: 50, height: 50))
-        scrollView.superview!.addSubview(indicator)//add to superView is not perfect
-        indicator.backgroundColor = .black
-        
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragging(sender:)))
-        indicator.addGestureRecognizer(pan);
+//        indicator = Indicator(frame: CGRect(x: scrollView.frame.size.width - 50, y: 0, width: 50, height: 50))
+//        scrollView.superview!.addSubview(indicator)//add to superView is not perfect
+//        indicator.backgroundColor = .black
+//        
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragging(sender:)))
+//        indicator.addGestureRecognizer(pan);
     }
     
     func dragging(sender:UIPanGestureRecognizer) {
@@ -56,12 +57,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             let offset = sender.translation(in: indicator.superview!)
             indicator.center.y += offset.y
             sender.setTranslation(.zero, in: indicator.superview!)
-            
-            
             let currentOffsetY = indicator.frame.origin.y
             let maxOffsetY = scrollView.frame.size.height - indicator.frame.height
             let offsetPercentage = currentOffsetY / maxOffsetY
-            print(offsetPercentage)
             scrollView.contentOffset.y = offsetPercentage * (scrollView.contentSize.height - scrollView.frame.size.height)
             
         }
