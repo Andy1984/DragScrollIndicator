@@ -35,56 +35,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         }
         scrollView.contentSize = CGSize(width: 0, height: CGFloat(count) * h)
         scrollView.addDragScrollIndicator()
-//        scrollView.delegate = self
-
-        
-        
-//        indicator = Indicator(frame: CGRect(x: scrollView.frame.size.width - 50, y: 0, width: 50, height: 50))
-//        scrollView.superview!.addSubview(indicator)//add to superView is not perfect
-//        indicator.backgroundColor = .black
-//        
-//        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragging(sender:)))
-//        indicator.addGestureRecognizer(pan);
-    }
-    
-    func dragging(sender:UIPanGestureRecognizer) {
-        
-        if sender.state == .began {
-            isDraggingIndicator = true
-        }
-        
-        if sender.state == .changed {
-            let offset = sender.translation(in: indicator.superview!)
-            indicator.center.y += offset.y
-            sender.setTranslation(.zero, in: indicator.superview!)
-            let currentOffsetY = indicator.frame.origin.y
-            let maxOffsetY = scrollView.frame.size.height - indicator.frame.height
-            let offsetPercentage = currentOffsetY / maxOffsetY
-            scrollView.contentOffset.y = offsetPercentage * (scrollView.contentSize.height - scrollView.frame.size.height)
-            
-        }
-        
-        if sender.state == .ended {
-            isDraggingIndicator = false
-        }
-        
+        scrollView.delegate = self
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard isDraggingIndicator == false else {
-            return
-        }
-        guard scrollView.superview != nil else {
-            return
-        }
-        
-        let maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        let currentOffset = scrollView.contentOffset.y
-        let offsetPercentage = currentOffset / maxOffset
-        
-        let maxIndicatorOffset = scrollView.frame.size.height - indicator.frame.height
-        indicator.frame.origin.y = maxIndicatorOffset * offsetPercentage
-        
+        NotificationCenter.default.post(Notification(name: DragScrollIndicatorDidScroll))
+        NotificationCenter.default.post(name: DragScrollIndicatorDidScroll, object: self, userInfo: ["scrollView":scrollView])
     }
 }
 

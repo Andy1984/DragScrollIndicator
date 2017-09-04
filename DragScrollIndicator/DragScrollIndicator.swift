@@ -14,6 +14,7 @@ import UIKit
 private var isDraggingIndicatorKey:UInt8 = 0
 private var indicatorKey:UInt8 = 0
 private var showDragScrollIndicatorKey:UInt8 = 0
+public let DragScrollIndicatorDidScroll:Notification.Name = Notification.Name(rawValue: "DragScrollIndicatorDidScroll")
 extension UIScrollView {
     var isDraggingIndicator:Bool {
         get {
@@ -39,6 +40,7 @@ extension UIScrollView {
         indicator.backgroundColor = .black
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dragging(sender:)))
         indicator.addGestureRecognizer(pan);
+        NotificationCenter.default.addObserver(self, selector: #selector(drag_scrollViewDidScroll(notification:)), name: DragScrollIndicatorDidScroll, object: nil)
     }
     
     func dragging(sender:UIPanGestureRecognizer) {
@@ -61,7 +63,25 @@ extension UIScrollView {
         if sender.state == .ended {
             isDraggingIndicator = false
         }
+    }
+    
+    func drag_scrollViewDidScroll(notification: Notification) {
+        guard let scrollView = notification.userInfo?["scrollView"] as? UIScrollView else {
+            return
+        }
+        guard isDraggingIndicator == false else {
+            return
+        }
+        guard scrollView.superview != nil else {
+            return
+        }
         
+        let maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        let currentOffset = scrollView.contentOffset.y
+        let offsetPercentage = currentOffset / maxOffset
+        
+        let maxIndicatorOffset = scrollView.frame.size.height - indicator.frame.height
+        indicator.frame.origin.y = maxIndicatorOffset * offsetPercentage
     }
 }
 
